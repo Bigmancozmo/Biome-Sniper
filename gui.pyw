@@ -5,6 +5,8 @@ from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
 
+VERSION = "v1.0.0"
+
 root = Tk()
 root.geometry("500x690")
 root.title("Sol's RNG PS Sniper")
