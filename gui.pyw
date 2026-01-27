@@ -8,8 +8,8 @@ import updater
 
 def start():
 	root = Tk()
-	root.geometry("500x690")
 	root.title("BMC's Biome Sniper - " + updater.CURRENT)
+	root.resizable(False, False)
 
 	mainframe = ttk.Frame(root, padding=(10,10,10,10))
 
@@ -229,6 +229,8 @@ def start():
 	btn.pack()
 
 	mainframe.pack()
+	root.update_idletasks() # calculate sizes
+	root.geometry(f"{root.winfo_reqwidth()}x{root.winfo_reqheight()}") # auto-fit
 	root.mainloop()
 
 if updater.update_available():
