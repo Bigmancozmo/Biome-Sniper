@@ -6,9 +6,6 @@ from tkinter import messagebox
 import dataMgr as d
 import updater
 
-if os.path.exists('apply-update.py'):
-    os.remove('apply-update.py')
-
 def start():
 	root = Tk()
 	root.geometry("500x690")
@@ -235,7 +232,11 @@ def start():
 	root.mainloop()
 
 if updater.update_available():
+	if os.path.exists('apply-update.py'):
+		os.remove('apply-update.py')
 	print("An update is available")
 	os.system('python -c "import updater; updater.update()"')
 else:
+	if os.path.exists('apply-update.py'):
+		os.remove('apply-update.py')
 	start()
