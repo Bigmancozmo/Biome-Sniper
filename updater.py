@@ -2,7 +2,7 @@ import requests
 import os, zipfile
 
 DISABLE_SKIP = False
-CURRENT = "v1.1.0"
+CURRENT = "v1.0.11"
 
 # Set this environment variable to disable the auto updater in that directory
 value = os.environ.get("BIOME_SNIPER_DEV_FOLDER")
@@ -17,7 +17,7 @@ folder = os.path.dirname(os.path.abspath(__file__)).upper()
 def update_available():
 	req = requests.get("https://github.com/Bigmancozmo/Biome-Sniper/releases/latest", allow_redirects=True)
 	LATEST = req.url.split("/releases/tag/")[1]
-	return LATEST != CURRENT
+	return (LATEST != CURRENT) and (folder != value)
 
 def update():
 	if value in folder:
