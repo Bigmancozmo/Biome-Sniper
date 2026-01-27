@@ -169,7 +169,10 @@ async def handle_message(message):
 		try:
 			deeplink = resolve_share_link(getLink(allText))
 			#deeplink = deeplink.replace("roblox://", "roblox-player://")
-			os.startfile(deeplink)
+			if sys.platform == "win32":
+				os.startfile(deeplink)
+			else:
+				webbrowser.open(deeplink)
 			sendNotif = True
 		except Exception as e:
 			print("No PS link found, but saw " + str(matched_keywords), f'({message.guild.id}/{message.channel.id})')

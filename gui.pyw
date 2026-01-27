@@ -177,7 +177,7 @@ def start():
 
 	def start_macro():
 		root.destroy()
-		os.system("python internals.py")
+		os.system("python3 internals.py")
 
 	def save_treeview():
 		data = {}
