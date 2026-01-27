@@ -2,7 +2,7 @@ import requests
 import os, zipfile
 
 DISABLE_SKIP = False
-CURRENT = "v1.0.10"
+CURRENT = "v1.1.0"
 
 # Set this environment variable to disable the auto updater in that directory
 value = os.environ.get("BIOME_SNIPER_DEV_FOLDER")
@@ -42,7 +42,7 @@ def update():
 			print("Extracted")
 			print("Installing...")
 			lines = [
-				"import os, shutil, time\n",
+				"import os, shutil, time, sys, subprocess\n",
 				"print('Cleaning pre-update files...')\n",
 				"if os.path.exists('update.zip'):\n",
 				"    os.remove('update.zip')\n",
