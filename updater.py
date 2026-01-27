@@ -61,6 +61,8 @@ def update():
 				"    shutil.rmtree('__pycache__')\n",
 				"if os.path.exists('updated'):\n",
 				"    shutil.rmtree('updated')\n",
+				"time.sleep(2)\n",
+				"os.system('python gui.pyw')"
 			]
 			with open("apply-update.py", "w") as f:
 				f.writelines(lines)
