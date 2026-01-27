@@ -204,16 +204,9 @@ class CustomClient(discord.Client):
 		await handle_message(message)
 
 def start():
-	try:
-		print("Target Servers:", target_guilds)
-		print("Target Channels:", target_channels)
-		client = CustomClient()
-		client.run(TOKEN)
-	except:
-		os.system("python3 -m pip uninstall discord.py")
-		time.sleep(1)
-		os.system("python3 -m pip install discord.py-self")
-		time.sleep(2)
-		start()
+	print("Target Servers:", target_guilds)
+	print("Target Channels:", target_channels)
+	client = CustomClient()
+	client.run(TOKEN)
 
 start()
