@@ -51,7 +51,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 	def focus_in(e):
 		if addEntryVar.get() == addEntryPlaceholder:
 			addEntryVar.set("")
-			addEntry.config(foreground="black")
+			addEntry.config(foreground="white")
 
 	def focus_out(e):
 		if addEntryVar.get() == "":
@@ -72,7 +72,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 	def focus_in(e):
 		if noteEntryVar.get() == noteEntryPlaceholder:
 			noteEntryVar.set("")
-			noteEntry.config(foreground="black")
+			noteEntry.config(foreground="white")
 
 	def focus_out(e):
 		if noteEntryVar.get() == "":
@@ -87,6 +87,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 	selectedServer = ""
 
 	def add_server():
+		nonlocal selectedServer
 		if not addEntryVar.get().isdigit():
 			return
 		name = addEntryVar.get()
@@ -108,6 +109,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 		save_treeview()
 
 	def add_channel():
+		nonlocal selectedServer
 		if not addEntryVar.get().isdigit():
 			return
 		name = addEntryVar.get()
@@ -167,7 +169,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 	treeview.bind("<Button-3>", show_menu)
 
 	def on_click(event):
-		global selectedServer
+		nonlocal selectedServer
 		item = treeview.identify_row(event.y)
 		if item:
 			parent = treeview.parent(item)

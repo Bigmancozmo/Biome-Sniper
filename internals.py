@@ -182,7 +182,10 @@ async def handle_message(message):
 	if matched_keywords and not matched_blacklist:
 		if PAUSED:
 			print("It's paused buddy")
-			return
+			if "GLIT" in matched_keywords or "CYBER" in matched_keywords or "DREAM" in matched_keywords:
+				print("BUT I WILL BYPASS ITTTTT")
+			else:
+				return
 		print("Matched keywords")
 		sendNotif = False
 		try:
