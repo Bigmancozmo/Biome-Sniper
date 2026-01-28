@@ -62,10 +62,10 @@ def update():
 				"if os.path.exists('updated'):\n",
 				"    shutil.rmtree('updated')\n",
 				"time.sleep(2)\n",
-				"os.system('python3 gui.pyw')"
+				"os.system('py gui.pyw')"
 			]
 			with open("apply-update.py", "w") as f:
 				f.writelines(lines)
-			os.system("python3 apply-update.py")
+			os.system("py apply-update.py")
 		else:
 			print("Up to date")
