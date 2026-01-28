@@ -6,6 +6,7 @@ from tkinter import messagebox
 import dataMgr as d
 import updater
 import sv_ttk
+from PIL import Image, ImageTk
 
 import tabs.targets
 import tabs.discordToken
@@ -16,6 +17,10 @@ def start():
 	root.title("BMC's Biome Sniper - " + updater.CURRENT)
 	root.resizable(False, False)
 	sv_ttk.set_theme("dark")
+
+	icon = Image.open("icon.png")
+	photo = ImageTk.PhotoImage(icon)
+	root.wm_iconphoto(False, photo)
 
 	notebook = ttk.Notebook(root)
 	notebook.pack(fill="both", expand=True)

@@ -4,3 +4,4 @@ requests
 pathspec
 pathlib
 sv-ttk
+pillow
