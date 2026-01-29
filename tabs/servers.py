@@ -5,7 +5,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
 import updater
-import sv_ttk
+#import sv_ttk
 
 def create(notebook: ttk.Notebook, root: Tk):
 	serversFrame = ttk.Frame(notebook, padding=(20,20,20,20))

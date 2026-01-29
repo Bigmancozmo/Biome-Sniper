@@ -5,7 +5,6 @@ from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
 import updater
-import sv_ttk
 
 def create(notebook: ttk.Notebook):
 	def discord_token_changed(*args):
