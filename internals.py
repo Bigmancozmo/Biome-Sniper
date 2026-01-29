@@ -1,12 +1,4 @@
-# A lot of this code was from another project and just shoved into here
-# So ignore a lot of the stuff
-# such as:
-#
-# KEYWORDS = [...]
-# keywords = []
-# .....
-# KEYWORDS = keywords
-
+import util
 
 try:
 	print("Importing packages, this may take a moment if it's your first time running the script.")
@@ -149,33 +141,7 @@ try:
 		return final
 
 	async def handle_message(message):
-		allText = ""
-
-		if message.content:
-			allText = allText + message.content
-		if message.embeds:
-			for embed in message.embeds:
-				allText = allText + str(embed.title)
-				allText = allText + str(embed.description)
-		if message.components:
-			# For MultiScope 2.0.0
-			# embeds have a "Join Server" button rather than a link.
-			# I dont know if MS2 uses ActionRow or Button so I just check both
-			for component in message.components:
-				if component.type == discord.ComponentType.button:
-					allText = allText + action.url
-				else:
-					if component.type == discord.ComponentType.action_row:
-						for action in component.children:
-							if action.type == discord.ComponentType.button:
-								allText = allText + action.url
-
-		allText = allText.replace(" ", "")
-		allText = allText.replace("-", "")
-		allText = allText.replace("!", "")
-		allText = allText.replace("@", "")
-		allText = allText.replace("^", "")
-		allText = allText.replace("`", "")
+		allText = util.extractText(message, True)
 
 		matched_keywords = [word for word in keywords if word in allText.upper()]
 		matched_blacklist = [word for word in blacklist if word in allText.upper()]
