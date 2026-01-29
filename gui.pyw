@@ -1,11 +1,11 @@
-import os
+import os, sys
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
 import updater
-import sv_ttk
+
 from PIL import Image, ImageTk
 
 import tabs.targets
@@ -17,7 +17,14 @@ def start():
 	root = Tk()
 	root.title("BMC's Biome Sniper - " + updater.CURRENT)
 	root.resizable(False, False)
-	sv_ttk.set_theme("dark")
+	
+	if sys.platform == "win32":
+		try:
+			import sv_ttk
+		except:
+			os.system("pip install sv-ttk")
+		import sv_ttk
+		sv_ttk.set_theme("dark")
 
 	icon = Image.open("icon.png")
 	photo = ImageTk.PhotoImage(icon)

@@ -24,8 +24,8 @@ def create(notebook: ttk.Notebook):
 
 	def add_keyword_toggle(dataKey, dText, default, col, row):
 		nonlocal keywordIdx
-		snipe_void_coin = BooleanVar(value=d.get_key(dataKey, default))
-		checkbox = ttk.Checkbutton(keywordToggleFrame, text=dText, variable=snipe_void_coin)
+		booleanVar = BooleanVar(value=d.get_key(dataKey, default))
+		checkbox = ttk.Checkbutton(keywordToggleFrame, text=dText, variable=booleanVar)
 		checkbox.grid(
 			row=row,
 			column=col,
@@ -34,9 +34,9 @@ def create(notebook: ttk.Notebook):
 		keywordIdx += 1
 
 		def void_coin_changed(*args):
-			d.set_key(dataKey, snipe_void_coin.get())
+			d.set_key(dataKey, booleanVar.get())
 
-		snipe_void_coin.trace_add("write", void_coin_changed)
+		booleanVar.trace_add("write", void_coin_changed)
 
 	add_keyword_toggle("KEYWORD_Mari", "Mari", False, Column.MERCHANT.value, 0)
 	add_keyword_toggle("KEYWORD_VoidCoin", "Void Coin", True, Column.MERCHANT.value, 1)
