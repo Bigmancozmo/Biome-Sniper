@@ -1,4 +1,5 @@
 import util
+import json
 
 try:
 	print("Importing packages, this may take a moment if it's your first time running the script.")
@@ -10,6 +11,9 @@ try:
 	import time, threading
 	import requests
 	import datetime
+
+	with open("snipe_map.json", "r") as f:
+		KEYWORD_MAP = json.load(f)
 
 	PAUSED = False
 
@@ -65,47 +69,14 @@ try:
 
 	keywords = []
 
-	if(d.get_key("KEYWORD_VoidCoin", False)):
-		keywords.append("VOID")
-	if(d.get_key("KEYWORD_Mari", False)):
-		keywords.append("MARI")
-	if(d.get_key("KEYWORD_Jest", False)):
-		keywords.append("JEST")
-	if(d.get_key("KEYWORD_Obliv", False)):
-		keywords.append("OBLIV")
-	if(d.get_key("KEYWORD_SandStorm", False)):
-		keywords.append("SAND")
-		keywords.append("SANDSTORM")
-		keywords.append("SAND STORM")
-	if(d.get_key("KEYWORD_Aurora", False)):
-		keywords.append("AURORA")
-	if(d.get_key("KEYWORD_Heaven", False)):
-		keywords.append("HEAV")
-	if(d.get_key("KEYWORD_Hell", False)):
-		keywords.append("HELL")
-	if(d.get_key("KEYWORD_Windy", False)):
-		keywords.append("WIND")
-	if(d.get_key("KEYWORD_Rainy", False)):
-		keywords.append("RAIN")
-	#if(d.get_key("KEYWORD_Snowy", False)): # TODO: Enable after winter event
-	#	keywords.append("SNOW")
-	if(d.get_key("KEYWORD_Starfall", False)):
-		keywords.append("STARF")
-	if(d.get_key("KEYWORD_Corruption", False)):
-		keywords.append("CORRUP")
-	if(d.get_key("KEYWORD_Null", False)):
-		keywords.append("NULL")
-	if(d.get_key("KEYWORD_GLIT", False)):
-		keywords.append("GLIT")
-	if(d.get_key("KEYWORD_DREAM", False)):
-		keywords.append("DREAM")
-	if(d.get_key("KEYWORD_CYBER", False)):
-		keywords.append("CYBER")
+	for keyword in KEYWORD_MAP:
+		data = util.getKeywordInfo(keyword)
+		if d.get_key(data["key"], False):
+			for kwd in data["words"]:
+				keywords.append(kwd)
 
 	TOKEN = d.get_key("DiscordToken", "")
-
-	DONTSNIPE_MARKER = "HIMACROPLSDONTSNIPETHIS"
-	blacklist = ["ENDED", "FAKE", "BAIT", "OVER", "HEAVENLY", DONTSNIPE_MARKER]
+	blacklist = ["ENDED", "FAKE", "BAIT", "OVER", "HEAVENLY"]
 
 	print(keywords)
 
@@ -146,6 +117,9 @@ try:
 	async def handle_message(message):
 		allText = util.extractText(message, True)
 
+		if "Guild:" in allText and "Channel:" in allText and "BMC's Biome Sniper" in allText and "Sniped link" in allText:
+			return
+
 		matched_keywords = [word for word in keywords if word in allText.upper()]
 		matched_blacklist = [word for word in blacklist if word in allText.upper()]
 
@@ -179,64 +153,24 @@ try:
 				t.start()
 			try:
 				url = d.get_key('WebhookURL', None)
+				kwdData = util.getKeywordDataFromKeyword(matched_keywords[0])
 
-				images = {
-					"MARI": "/merchants/Mari.png",
-					"JEST": "/merchants/Jester.png",
-					"SAND": "/biomes/SAND STORM.png",
-					"SANDSTORM": "/biomes/SAND STORM.png",
-					"SAND STORM": "/biomes/SAND STORM.png",
-					"AURORA": "/biomes/AURORA.png",
-					"HEAV": "/biomes/HEAVEN.png",
-					"HELL": "/biomes/HELL.png",
-					"WIND": "/biomes/WINDY.png",
-					"RAIN": "/biomes/RAINY.png",
-					"STARF": "/biomes/STARFALL.png",
-					"CORRUP": "/biomes/CORRUPTION.png",
-					"NULL": "/biomes/NULL.png",
-					"GLIT": "/biomes/GLITCHED.png",
-					"DREAM": "/biomes/DREAMSPACE.png",
-					"CYBER": "/biomes/CYBERSPACE.png",
-					"VOID": "/merchants/Mari.png",
-					"OBLIV": "/merchants/Jester.png",
+				payload = {
+					"embeds": [
+						{
+							"title": "Sniped link",
+							"description": f"# {kwdData["name"]}\n"+
+							f"- **Guild:** {message.guild.name}\n"+
+							f"- **Channel:** #{message.channel.name}\n"+
+							f"{getLink(allText)}\n",
+							"timestamp": datetime.datetime.now().isoformat(),
+							"footer": {"text": "BMC's Biome Sniper"},
+						}
+					]
 				}
 
-				# only displayed in webhook embed
-				fullNames = {
-					"MARI": "MARI",
-					"JEST": "JESTER",
-					"SAND": "SAND STORM",
-					"SANDSTORM": "SAND STORM",
-					"SAND STORM": "SAND STORM",
-					"AURORA": "AURORA",
-					"HEAV": "HEAVEN",
-					"HELL": "HELL",
-					"WIND": "WINDY",
-					"RAIN": "RAINY",
-					"STARF": "STARFALL",
-					"CORRUP": "CORRUPTION",
-					"NULL": "NULL",
-					"GLIT": "GLITCHED",
-					"DREAM": "DREAMSPACE",
-					"CYBER": "CYBERSPACE",
-					"VOID": "VOID COIN",
-					"OBLIV": "OBLIVION POTION",
-				}
-
-				payload = {"embeds": [
-        		{
-            		"title": "Sniped link",
-            		"description": f"# {fullNames.get(matched_keywords[0], 'idk')}\n"+
-					f"- **Guild:** {message.guild.name}\n"+
-					f"- **Channel:** #{message.channel.name}\n"+
-					f"{getLink(allText)}\n"+
-					f"-# ||{DONTSNIPE_MARKER}||\n",
-            		"timestamp": datetime.datetime.now().isoformat(),
-            		"footer": {"text": "BMC's Biome Sniper"},
-        		}]}
-
-				if images.get(matched_keywords[0]):
-					payload["embeds"][0]["thumbnail"] = {"url": "https://keylens-website.web.app"+images[matched_keywords[0]]}
+				print("https://keylens-website.web.app"+kwdData["image"])
+				payload["embeds"][0]["thumbnail"] = {"url": "https://keylens-website.web.app"+kwdData["image"]}
 
 				if url is not None and url != "" and url.startswith("http"):
 					requests.request("POST", url, json=payload, headers={
@@ -273,7 +207,7 @@ try:
 			client.run(TOKEN)
 
 	start()
-except:
+except Exception as e:
 	import shutil, os
 	def experimentalPatch(folder):
 		print("Cleaning", folder)
@@ -282,6 +216,7 @@ except:
 				p = os.path.join(folder, f)
 				shutil.rmtree(p) if os.path.isdir(p) else os.remove(p)
 	import site
+	print(e)
 	selection = input("Something went wrong. Apply experimental fix? (y/n): ")
 	if selection == "y":
 		print("Applying... this may take a moment")

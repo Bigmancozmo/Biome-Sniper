@@ -37,8 +37,8 @@ def start():
 	tabs.targets.create(notebook)
 	tabs.discordToken.create(notebook)
 	tabs.servers.create(notebook)
-	#tabs.settings.create(notebook)
 	tabs.webhook.create(notebook)
+	#tabs.settings.create(notebook)
 
 	def start_macro():
 		root.destroy()

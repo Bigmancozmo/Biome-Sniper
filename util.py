@@ -1,4 +1,33 @@
-import discord
+import discord, json
+
+def getKeywordInfo(kwd):
+	with open("snipe_map.json", "r") as f:
+		KEYWORD_MAP = json.load(f)
+	if kwd in KEYWORD_MAP:
+		dta = KEYWORD_MAP[kwd]
+		return {
+			"name": kwd,
+			"key": dta["key"],
+			"words": dta["words"],
+			"image": dta["image"]
+		}
+	else:
+		return {
+			"name": "ULTRA RARE ERROR BIOME",
+			"key": "SomethingWentWrongLilBro",
+			"words": [],
+			"image": "/biomes/UnknownBiome.png"
+		}
+
+def getKeywordDataFromKeyword(match):
+	with open("snipe_map.json", "r") as f:
+		KEYWORD_MAP = json.load(f)
+	found = "FailedToFind"
+	for name in KEYWORD_MAP:
+		if match in KEYWORD_MAP[name]["words"]:
+			found = name
+			break
+	return getKeywordInfo(found)
 
 # It scares me but it works so who gaf
 def convertMessageToDict(msgIn):
@@ -13,10 +42,18 @@ def convertMessageToDict(msgIn):
 		if msgIn.embeds:
 			message["embeds"] = []
 			for embed in msgIn.embeds:
-				message["embeds"].append({
-					"title": embed.title,
-					"description": embed.description
-				})
+				dta = {
+					"title": "",
+					"description": "",
+					"footer": ""
+				}
+				if embed.title:
+					dta["title"] = embed.title
+				if embed.description:
+					dta["description"] = embed.description
+				if embed.footer:
+					dta["footer"] = embed.footer.text
+				message["embeds"].append(dta)
 		
 		if msgIn.components:
 			message["components"] = []
@@ -48,6 +85,7 @@ def extractText(messageInput, filter=False):
 		for embed in message["embeds"]:
 			allText = allText + str(embed["title"])
 			allText = allText + str(embed["description"])
+			allText = allText + str(embed["footer"])
 	if "components" in message:
 		# For MultiScope 2.0.0
 		# embeds have a "Join Server" button rather than a link.

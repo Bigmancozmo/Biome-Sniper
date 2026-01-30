@@ -1,0 +1,87 @@
+{
+	"VOID COIN": {
+		"key": "KEYWORD_VoidCoin",
+		"words": ["VOID"],
+		"image": "/merchants/Mari.png"
+	},
+	"MARI": {
+		"key": "KEYWORD_Mari",
+		"words": ["MARI"],
+		"image": "/merchants/Mari.png"
+	},
+	"JESTER": {
+		"key": "KEYWORD_Jest",
+		"words": ["JEST"],
+		"image": "/merchants/Jester.png"
+	},
+	"OBLIVION POTION": {
+		"key": "KEYWORD_Obliv",
+		"words": ["OBLIV"],
+		"image": "/merchants/Jester.png"
+	},
+	"SAND STORM": {
+		"key": "KEYWORD_SandStorm",
+		"words": ["SAND"],
+		"image": "/biomes/SAND STORM.png"
+	},
+	"AURORA": {
+		"key": "KEYWORD_Aurora",
+		"words": ["AUROR"],
+		"image": "/biomes/AURORA.png"
+	},
+	"HEAVEN": {
+		"key": "KEYWORD_Heaven",
+		"words": ["HEAV"],
+		"image": "/biomes/HEAVEN.png"
+	},
+	"HELL": {
+		"key": "KEYWORD_Hell",
+		"words": ["HELL", "HECK"],
+		"image": "/biomes/HELL.png"
+	},
+	"WINDY": {
+		"key": "KEYWORD_Windy",
+		"words": ["WIND"],
+		"image": "/biomes/WINDY.png"
+	},
+	"RAINY": {
+		"key": "KEYWORD_Rainy",
+		"words": ["RAIN"],
+		"image": "/biomes/RAINY.png"
+	},
+	"SNOWY": {
+		"key": "KEYWORD_Snowy",
+		"words": ["SNOW"],
+		"image": "/biomes/SNOWY.png"
+	},
+	"STARFALL": {
+		"key": "KEYWORD_Starfall",
+		"words": ["STARF"],
+		"image": "/biomes/STARFALL.png"
+	},
+	"NULL": {
+		"key": "KEYWORD_Null",
+		"words": ["NULL", "NIL"],
+		"image": "/biomes/NULL.png"
+	},
+	"CORRUPTION": {
+		"key": "KEYWORD_Corruption",
+		"words": ["CORRUP"],
+		"image": "/biomes/CORRUPTION.png"
+	},
+	"GLITCHED": {
+		"key": "KEYWORD_GLIT",
+		"words": ["GLIT", "GLIG"],
+		"image": "/biomes/GLITCHED.png"
+	},
+	"DREAMSPACE": {
+		"key": "KEYWORD_DREAM",
+		"words": ["DREAM"],
+		"image": "/biomes/DREAMSPACE.png"
+	},
+	"CYBERSPACE": {
+		"key": "KEYWORD_CYBER",
+		"words": ["CYBER"],
+		"image": "/biomes/CYBERSPACE.png"
+	}
+}
