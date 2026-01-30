@@ -26,7 +26,7 @@
 	},
 	"AURORA": {
 		"key": "KEYWORD_Aurora",
-		"words": ["AUROR"],
+		"words": ["AUROR", "GLOBE"],
 		"image": "/biomes/AURORA.png"
 	},
 	"HEAVEN": {
