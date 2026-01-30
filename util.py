@@ -83,20 +83,23 @@ def extractText(messageInput, filter=False):
 		allText = allText + message["content"]
 	if "embeds" in message:
 		for embed in message["embeds"]:
-			allText = allText + str(embed["title"])
-			allText = allText + str(embed["description"])
-			allText = allText + str(embed["footer"])
+			if "title" in embed:
+				allText = allText + str(embed["title"])
+			if "description" in embed:
+				allText = allText + str(embed["description"])
+			if "footer" in embed:
+				allText = allText + str(embed["footer"])
 	if "components" in message:
 		# For MultiScope 2.0.0
 		# embeds have a "Join Server" button rather than a link.
 		# I dont know if MS2 uses ActionRow or Button so I just check both
 		for component in message["components"]:
-			if component.type == discord.ComponentType.button:
+			if component["type"] == discord.ComponentType.button:
 				allText = allText + component["url"]
 			else:
-				if component.type == discord.ComponentType.action_row:
+				if component["type"] == discord.ComponentType.action_row:
 					for action in component["children"]:
-						if action.type == discord.ComponentType.button:
+						if action["type"] == discord.ComponentType.button:
 							allText = allText + action["url"]
 	
 	if filter:

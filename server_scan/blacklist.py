@@ -18,10 +18,29 @@ BLACKLIST_CATEGORIES = [
 	"1463125634384527567", # Tickets 2
 	"1211506038289731684", # Archive
 	"1213762738158047282", # Unverified
+	"1186574060688257024", # Logs
+	"1198997508622393394", # Tester (?)
+	"1211793070509522944", # Admin (?)
+	"1187757293165625544", # Dev/Trusted
+	"1186588466302169158", # Unknown
+	"1211793070509522944", # Unknown
+	"1257521004599574538", # Unknown
+	"1360946081592119356", # Unknown
+	"1360917981495951451", # Boosters
+
 
 	# The Glitch Core
 	"1373021908509130864", # Tickets
 	"1430104362327212082", # Unknown (archive?)
+
+	# Cy's Glitch Hunt
+	"1342161865026830497", # Archive (?)
+	"1393020271728001024", # Multi-Macro Inactive
+	"1393017087420792973", # Inactive 1
+	"1355915007568904406", # Inactive 2
+	"1297620248718999652", # Inactive 3
+	"1263176016189198427", # Mod channels
+	"1335724685996068875", # Unknown
 ]
 
 # You don't need to put channels blacklisted

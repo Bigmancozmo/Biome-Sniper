@@ -32,7 +32,6 @@ def setCompleteCallback(cb):
 def processChannel(channel):
 	global TOTAL, PROGRESS, CALLBACK, PROGRESS_CALLBACK
 	PROGRESS += 1
-	print(f"Channel {PROGRESS}/{TOTAL} ({channel["name"]})")
 
 	if PROGRESS_CALLBACK:
 		PROGRESS_CALLBACK(PROGRESS, TOTAL)
@@ -41,10 +40,8 @@ def processChannel(channel):
 		return
 	if channel["parent_id"] != None:
 		if channel["parent_id"] in BLACKLIST_CATEGORIES:
-			warn(f"Category {channel["parent_id"]} is blacklisted!")
 			return
 	if channel["id"] in BLACKLIST_CHANNELS or channel["id"] in BLACKLIST_CATEGORIES:
-		warn(f"Channel {channel["id"]} is blacklisted!")
 		return
 	
 	channelId = channel["id"]
@@ -58,9 +55,8 @@ def processChannel(channel):
 	for msg in r.json():
 		if util.hasLink(msg):
 			linkMessages += 1
-		if linkMessages >= 2:
-			break
 	if linkMessages >= 2:
+		print(f"{channelName} passed: {linkMessages}/5")
 		if CALLBACK:
 			CALLBACK(channelId, channelName)
 
@@ -75,7 +71,15 @@ def scanServer(serverId):
 		return
 	channels = r.json()
 	TOTAL = len(channels)
-	with ThreadPoolExecutor(max_workers=10) as pool:
-		pool.map(processChannel, channels)
+	DEBUG_MODE = False
+	if DEBUG_MODE:
+		# Slow, but logs errors
+		for channel in channels:
+			processChannel(channel)
+	else:
+		# Fast, but doesn't log errors
+		print("Go my minions")
+		with ThreadPoolExecutor(max_workers=50) as pool:
+			pool.map(processChannel, channels)
 	if COMPLETE_CALLBACK:
 		COMPLETE_CALLBACK()

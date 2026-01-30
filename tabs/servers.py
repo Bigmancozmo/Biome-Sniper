@@ -196,6 +196,8 @@ def create(notebook: ttk.Notebook):
 		startScannerBtn.config(text="Scanning...")
 	
 	def remove_selected():
+		if SCAN_IN_PROGRESS:
+			return
 		if lastSelected == "":
 			return
 		treeview.delete(lastSelected)
