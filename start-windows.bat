@@ -7,4 +7,4 @@ py -m pip install -r requirements.txt
 echo.
 echo Done! Starting program...
 echo.
-start gui.pyw
+py gui.pyw
