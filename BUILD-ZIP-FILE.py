@@ -16,7 +16,7 @@ if (folder / "build").exists():
 print("Complete\n")
 
 # extra files/folders to ignore
-custom_exclude = {"data.json", ".gitignore", "play.ahk", "__pycache__", ".git", "BUILD-ZIP-FILE.py"}
+custom_exclude = {"data.json", ".gitignore", "play.ahk", "__pycache__", ".git", "BUILD-ZIP-FILE.py", "README.md"}
 
 gitignore_file = folder / ".gitignore"
 if gitignore_file.exists():
