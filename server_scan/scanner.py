@@ -3,7 +3,7 @@ import requests
 import dataMgr as d
 from logging import warning as warn
 import sys, util
-from blacklist import BLACKLIST_CHANNELS, BLACKLIST_CATEGORIES
+from server_scan.blacklist import BLACKLIST_CHANNELS, BLACKLIST_CATEGORIES
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -13,11 +13,29 @@ def getHeaders():
 
 TOTAL = 999
 PROGRESS = 0
+CALLBACK = None
+COMPLETE_CALLBACK = None
+PROGRESS_CALLBACK = None
+
+def setHitCallback(cb):
+	global CALLBACK
+	CALLBACK = cb
+
+def setProgressCallback(cb):
+	global PROGRESS_CALLBACK
+	PROGRESS_CALLBACK = cb
+
+def setCompleteCallback(cb):
+	global COMPLETE_CALLBACK
+	COMPLETE_CALLBACK = cb
 
 def processChannel(channel):
-	global TOTAL, PROGRESS
+	global TOTAL, PROGRESS, CALLBACK, PROGRESS_CALLBACK
 	PROGRESS += 1
 	print(f"Channel {PROGRESS}/{TOTAL} ({channel["name"]})")
+
+	if PROGRESS_CALLBACK:
+		PROGRESS_CALLBACK(PROGRESS, TOTAL)
 
 	if channel["type"] != 0:
 		return
@@ -43,7 +61,8 @@ def processChannel(channel):
 		if linkMessages >= 2:
 			break
 	if linkMessages >= 2:
-		print("HIT:", channelId, channelName)
+		if CALLBACK:
+			CALLBACK(channelId, channelName)
 
 def scanServer(serverId):
 	global TOTAL, PROGRESS
@@ -58,3 +77,5 @@ def scanServer(serverId):
 	TOTAL = len(channels)
 	with ThreadPoolExecutor(max_workers=10) as pool:
 		pool.map(processChannel, channels)
+	if COMPLETE_CALLBACK:
+		COMPLETE_CALLBACK()
