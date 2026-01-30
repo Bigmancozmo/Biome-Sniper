@@ -12,6 +12,7 @@ import tabs.targets
 import tabs.discordToken
 import tabs.servers
 import tabs.settings
+import tabs.webhook
 
 def start():
 	root = Tk()
@@ -37,6 +38,7 @@ def start():
 	tabs.discordToken.create(notebook)
 	tabs.servers.create(notebook, root)
 	#tabs.settings.create(notebook)
+	tabs.webhook.create(notebook)
 
 	def start_macro():
 		root.destroy()

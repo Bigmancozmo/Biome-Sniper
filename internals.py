@@ -16,6 +16,8 @@ try:
 	sys.stdout.reconfigure(encoding='utf-8')
 	import dataMgr as d
 	import time, threading
+	import requests
+	import datetime
 
 	PAUSED = False
 
@@ -110,7 +112,8 @@ try:
 
 	TOKEN = d.get_key("DiscordToken", "")
 
-	blacklist = ["ENDED", "FAKE", "BAIT", "OVER", "HEAVENLY"]
+	DONTSNIPE_MARKER = "HIMACROPLSDONTSNIPETHIS"
+	blacklist = ["ENDED", "FAKE", "BAIT", "OVER", "HEAVENLY", DONTSNIPE_MARKER]
 
 	print(keywords)
 
@@ -208,6 +211,75 @@ try:
 				ducknotify.notify("Biome Sniper", "Joining "+str(matched_keywords) +", will pause for 120 seconds")
 				t = threading.Thread(target=pause_for, args=(120,))
 				t.start()
+			try:
+				url = d.get_key('WebhookURL', None)
+
+				images = {
+					"MARI": "/merchants/Mari.png",
+					"JEST": "/merchants/Jester.png",
+					"SAND": "/biomes/SAND STORM.png",
+					"SANDSTORM": "/biomes/SAND STORM.png",
+					"SAND STORM": "/biomes/SAND STORM.png",
+					"AURORA": "/biomes/AURORA.png",
+					"HEAV": "/biomes/HEAVEN.png",
+					"HELL": "/biomes/HELL.png",
+					"WIND": "/biomes/WINDY.png",
+					"RAIN": "/biomes/RAINY.png",
+					"STARF": "/biomes/STARFALL.png",
+					"CORRUP": "/biomes/CORRUPTION.png",
+					"NULL": "/biomes/NULL.png",
+					"GLIT": "/biomes/GLITCHED.png",
+					"DREAM": "/biomes/DREAMSPACE.png",
+					"CYBER": "/biomes/CYBERSPACE.png",
+					"VOID": "/merchants/Mari.png",
+					"OBLIV": "/merchants/Jester.png",
+				}
+
+				# only displayed in webhook embed
+				fullNames = {
+					"MARI": "MARI",
+					"JEST": "JESTER",
+					"SAND": "SAND STORM",
+					"SANDSTORM": "SAND STORM",
+					"SAND STORM": "SAND STORM",
+					"AURORA": "AURORA",
+					"HEAV": "HEAVEN",
+					"HELL": "HELL",
+					"WIND": "WINDY",
+					"RAIN": "RAINY",
+					"STARF": "STARFALL",
+					"CORRUP": "CORRUPTION",
+					"NULL": "NULL",
+					"GLIT": "GLITCHED",
+					"DREAM": "DREAMSPACE",
+					"CYBER": "CYBERSPACE",
+					"VOID": "VOID COIN",
+					"OBLIV": "OBLIVION POTION",
+				}
+
+				payload = {"embeds": [
+        		{
+            		"title": "Sniped link",
+            		"description": f"# {fullNames.get(matched_keywords[0], 'idk')}\n"+
+					f"- **Guild:** {message.guild.name}\n"+
+					f"- **Channel:** #{message.channel.name}\n"+
+					f"{getLink(allText)}\n"+
+					f"-# ||{DONTSNIPE_MARKER}||\n",
+            		"timestamp": datetime.datetime.now().isoformat(),
+            		"footer": {"text": "BMC's Biome Sniper"},
+        		}]}
+
+				if images.get(matched_keywords[0]):
+					payload["embeds"][0]["thumbnail"] = {"url": "https://keylens-website.web.app"+images[matched_keywords[0]]}
+
+				if url is not None and url != "" and url.startswith("http"):
+					requests.request("POST", url, json=payload, headers={
+						"Content-Type": "application/json",
+						"User-Agent": "insomnia/11.2.0"
+					})
+
+			except Exception as e:
+				print("Error sending webhook message:", e)
 
 	class CustomClient(discord.Client):
 		async def on_ready(self):
