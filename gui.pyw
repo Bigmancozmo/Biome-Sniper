@@ -15,7 +15,7 @@ DISCORD = "https://discord.gg/tVVghYhTX8"
 
 def start():
 	root = Tk()
-	root.title("BMC's Biome Sniper - " + updater.CURRENT)
+	root.title("BMC's Sniper - " + updater.CURRENT)
 	root.resizable(False, False)
 	
 	container = ttk.Frame(root)

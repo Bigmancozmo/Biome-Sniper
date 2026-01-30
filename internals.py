@@ -110,7 +110,7 @@ try:
 	async def handle_message(message):
 		allText = util.extractText(message, True)
 
-		if "Guild:" in allText and "Channel:" in allText and "BMC's Biome Sniper" in allText and "Sniped link" in allText:
+		if "Guild:" in allText and "Channel:" in allText and "BMC's Sniper" in allText and "Sniped link" in allText:
 			return
 
 		matched_keywords = [word for word in keywords if word in allText.upper()]
@@ -157,7 +157,7 @@ try:
 							f"- **Channel:** #{message.channel.name}\n"+
 							f"{getLink(allText)}\n",
 							"timestamp": datetime.datetime.utcnow().isoformat(),
-							"footer": {"text": "BMC's Biome Sniper"},
+							"footer": {"text": "BMC's Sniper"},
 						}
 					]
 				}
