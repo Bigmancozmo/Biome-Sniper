@@ -27,25 +27,25 @@ try:
 		import discord
 	except:
 		print("Installing Selfcord...")
-		os.system("pip install -U discord.py-self")
+		os.system(f"{sys.executable} -m pip install -U discord.py-self")
 
 	try:
 		import ducknotify
 	except:
 		print("Installing Ducknotify...")
-		os.system("python -m pip install ducknotify")
+		os.system(f"{sys.executable} -m pip install ducknotify")
 
 	try:
 		import requests
 	except:
 		print("Installing Requests...")
-		os.system("python -m pip install requests")
+		os.system(f"{sys.executable} -m pip install requests")
 
 	try:
 		import urllib
 	except:
 		print("Installing Urllib...")
-		os.system("python -m pip install urllib")
+		os.system(f"{sys.executable} -m pip install urllib")
 
 	from urllib.parse import urlparse, parse_qs, unquote
 	import discord, asyncio, requests, webbrowser

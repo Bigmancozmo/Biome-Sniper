@@ -1,5 +1,5 @@
 import requests
-import os, zipfile
+import os, zipfile, sys
 
 DISABLE_SKIP = False
 CURRENT = "v1.2.0"
@@ -62,10 +62,10 @@ def update():
 				"if os.path.exists('updated'):\n",
 				"    shutil.rmtree('updated')\n",
 				"time.sleep(2)\n",
-				"os.system('py gui.pyw')"
+				"os.system(f'{sys.executable} gui.pyw')"
 			]
 			with open("apply-update.py", "w") as f:
 				f.writelines(lines)
-			os.system("py apply-update.py")
+			os.system(f"{sys.executable} apply-update.py")
 		else:
 			print("Up to date")
