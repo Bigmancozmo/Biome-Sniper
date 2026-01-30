@@ -1,4 +1,4 @@
-# Channels that are known to not be useful
+# Channels & Categories that are known to not be useful. Makes scanning faster & more accurate
 # Feel free to contribute!
 
 BLACKLIST_CATEGORIES = [
@@ -18,6 +18,10 @@ BLACKLIST_CATEGORIES = [
 	"1463125634384527567", # Tickets 2
 	"1211506038289731684", # Archive
 	"1213762738158047282", # Unverified
+
+	# The Glitch Core
+	"1373021908509130864", # Tickets
+	"1430104362327212082", # Unknown (archive?)
 ]
 
 # You don't need to put channels blacklisted
