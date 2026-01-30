@@ -120,7 +120,7 @@ def create(notebook: ttk.Notebook):
 		treeview.insert("", tk.END, text=addEntryVar.get(), value=(noteEntryVar.get(),))
 		save_treeview()
 
-	def add_channel():
+	def add_channel(ignore_duplicates=False):
 		nonlocal selectedServer
 		if not addEntryVar.get().isdigit():
 			return
@@ -137,7 +137,8 @@ def create(notebook: ttk.Notebook):
 					exists = True
 					break
 		if exists:
-			messagebox.showwarning("Can't add", f"Server/Channel with ID '{addEntryVar.get()}' already exists")
+			if not ignore_duplicates:
+				messagebox.showwarning("Can't add", f"Server/Channel with ID '{addEntryVar.get()}' already exists")
 			return
 		treeview.insert(selectedServer, tk.END, text=addEntryVar.get(), value=(noteEntryVar.get(),))
 		treeview.item(selectedServer, open=True)
