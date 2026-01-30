@@ -1,16 +1,16 @@
-import util
-import json
-
 try:
 	print("Importing packages, this may take a moment if it's your first time running the script.")
 
 	import os
 	import sys
-	sys.stdout.reconfigure(encoding='utf-8')
 	import dataMgr as d
 	import time, threading
 	import requests
 	import datetime
+	import util
+	import json
+
+	sys.stdout.reconfigure(encoding='utf-8')
 
 	with open("snipe_map.json", "r") as f:
 		KEYWORD_MAP = json.load(f)
@@ -41,14 +41,7 @@ try:
 		print("Installing Requests...")
 		os.system(f"{sys.executable} -m pip install requests")
 
-	try:
-		import urllib
-	except:
-		print("Installing Urllib...")
-		os.system(f"{sys.executable} -m pip install urllib")
-
-	from urllib.parse import urlparse, parse_qs, unquote
-	import discord, asyncio, requests, webbrowser
+	import discord, requests, webbrowser
 	import ducknotify
 
 	print("Done")

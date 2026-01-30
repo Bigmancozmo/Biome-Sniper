@@ -1,10 +1,6 @@
-import os
-import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
 import dataMgr as d
-import updater
 
 def create(notebook: ttk.Notebook):
 	def discord_token_changed(*args):

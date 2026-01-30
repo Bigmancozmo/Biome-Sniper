@@ -1,9 +1,6 @@
 import os, sys
-import tkinter as tk
 from tkinter import *
 from tkinter import ttk
-from tkinter import messagebox
-import dataMgr as d
 import updater
 
 from PIL import Image, ImageTk

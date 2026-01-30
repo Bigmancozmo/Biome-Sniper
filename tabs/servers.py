@@ -1,11 +1,8 @@
-import os
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
-import updater
-#import sv_ttk
 
 def getForeground():
 	darkMode = d.get_key("SETTINGS_SV_DarkMode", True) and d.get_key("SETTINGS_SunValleyTheme", True)
