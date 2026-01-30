@@ -1,4 +1,4 @@
-import os, sys
+import os, sys, webbrowser
 from tkinter import *
 from tkinter import ttk
 import updater
@@ -11,38 +11,41 @@ import tabs.servers
 import tabs.settings
 import tabs.webhook
 
+DISCORD = "https://discord.gg/tVVghYhTX8"
+
 def start():
 	root = Tk()
 	root.title("BMC's Biome Sniper - " + updater.CURRENT)
 	root.resizable(False, False)
 	
-	if sys.platform == "win32":
-		try:
-			import sv_ttk
-		except:
-			os.system("pip install sv-ttk")
-		import sv_ttk
-		#sv_ttk.set_theme("dark")
+	container = ttk.Frame(root)
+	container.pack()
+
+	tabs.settings.apply(root)
 
 	icon = Image.open("icon.png")
 	photo = ImageTk.PhotoImage(icon)
 	root.wm_iconphoto(False, photo)
 
-	notebook = ttk.Notebook(root)
+	notebook = ttk.Notebook(container)
 	notebook.pack(fill="both", expand=True)
 
 	tabs.targets.create(notebook)
 	tabs.discordToken.create(notebook)
 	tabs.servers.create(notebook)
 	tabs.webhook.create(notebook)
-	#tabs.settings.create(notebook)
+	tabs.settings.create(notebook, root)
 
 	def start_macro():
 		root.destroy()
 		os.system(f"{sys.executable} internals.py")
 
-	btn = ttk.Button(root, text="Start Sniping", command=start_macro)
-	btn.pack(pady=10)
+	discordLink = ttk.Label(container, text="Join Discord", cursor="hand2")
+	discordLink.pack(padx=10, pady=10, side=LEFT)
+	discordLink.bind("<Button-1>", lambda e: webbrowser.open(DISCORD))
+
+	btn = ttk.Button(container, text="Start Sniper", command=start_macro)
+	btn.pack(pady=10, padx=10, side=RIGHT)
 
 	#mainframe.pack()
 	root.update_idletasks() # calculate sizes
