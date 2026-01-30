@@ -163,7 +163,7 @@ try:
 							f"- **Guild:** {message.guild.name}\n"+
 							f"- **Channel:** #{message.channel.name}\n"+
 							f"{getLink(allText)}\n",
-							"timestamp": datetime.datetime.now().isoformat(),
+							"timestamp": datetime.datetime.utcnow().isoformat(),
 							"footer": {"text": "BMC's Biome Sniper"},
 						}
 					]
