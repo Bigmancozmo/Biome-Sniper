@@ -7,7 +7,13 @@ import dataMgr as d
 import updater
 #import sv_ttk
 
-def create(notebook: ttk.Notebook, root: Tk):
+def getForeground():
+	darkMode = d.get_key("SETTINGS_SV_DarkMode", True) and d.get_key("SETTINGS_SunValleyTheme", True)
+	if darkMode:
+		return "white"
+	return "black"
+
+def create(notebook: ttk.Notebook):
 	serversFrame = ttk.Frame(notebook, padding=(20,20,20,20))
 	notebook.add(serversFrame, text="Servers")
 
@@ -39,19 +45,24 @@ def create(notebook: ttk.Notebook, root: Tk):
 
 	################################################
 
-	frame = ttk.Frame(serversFrame)
-	frame.pack(fill=tk.X)
+	entryFrame = ttk.Frame(serversFrame, width=600)
+	#entryFrame.pack_propagate(False)
+	entryFrame.pack(fill="x", expand=True, pady=2)
+
+	buttonFrame = ttk.Frame(serversFrame, width=600)
+	#buttonFrame.pack_propagate(False)
+	buttonFrame.pack(fill="x", expand=True, pady=2)
 
 	addEntryPlaceholder = "Server/Channel ID"
 	addEntryVar = tk.StringVar(value=addEntryPlaceholder)
 
-	addEntry = ttk.Entry(frame, textvariable=addEntryVar, foreground="grey")
+	addEntry = ttk.Entry(entryFrame, textvariable=addEntryVar, foreground="grey", width=35)
 	addEntry.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
 
 	def focus_in(e):
 		if addEntryVar.get() == addEntryPlaceholder:
 			addEntryVar.set("")
-			addEntry.config(foreground="white")
+			addEntry.config(foreground=getForeground())
 
 	def focus_out(e):
 		if addEntryVar.get() == "":
@@ -66,13 +77,13 @@ def create(notebook: ttk.Notebook, root: Tk):
 	noteEntryPlaceholder = "Note"
 	noteEntryVar = tk.StringVar(value=noteEntryPlaceholder)
 
-	noteEntry = ttk.Entry(frame, textvariable=noteEntryVar, foreground="grey")
+	noteEntry = ttk.Entry(entryFrame, textvariable=noteEntryVar, foreground="grey", width=35)
 	noteEntry.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
 
 	def focus_in(e):
 		if noteEntryVar.get() == noteEntryPlaceholder:
 			noteEntryVar.set("")
-			noteEntry.config(foreground="white")
+			noteEntry.config(foreground=getForeground())
 
 	def focus_out(e):
 		if noteEntryVar.get() == "":
@@ -85,6 +96,7 @@ def create(notebook: ttk.Notebook, root: Tk):
 	################################################
 
 	selectedServer = ""
+	lastSelected = ""
 
 	def add_server():
 		nonlocal selectedServer
@@ -131,12 +143,21 @@ def create(notebook: ttk.Notebook, root: Tk):
 		treeview.item(selectedServer, open=True)
 		save_treeview()
 
-	addServerBtn = ttk.Button(frame, text="Add Server", command=add_server)
-	addServerBtn.pack(side=tk.LEFT, padx=3)
+	def remove_selected():
+		if lastSelected == "":
+			return
+		treeview.delete(lastSelected)
 
-	addChannelBtn = ttk.Button(frame, text="Add Channel", command=add_channel)
-	addChannelBtn.pack(side=tk.LEFT, padx=3)
+	addServerBtn = ttk.Button(buttonFrame, text="Add Server", command=add_server)
+	addServerBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
+
+	addChannelBtn = ttk.Button(buttonFrame, text="Add Channel", command=add_channel)
+	addChannelBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
 	addChannelBtn.state(["disabled"])
+
+	removeBtn = ttk.Button(buttonFrame, text="Remove", command=remove_selected)
+	removeBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
+	removeBtn.state(["disabled"])
 
 	def save_treeview():
 		data = {}
@@ -152,29 +173,16 @@ def create(notebook: ttk.Notebook, root: Tk):
 			data[item["text"]] = itemData
 		d.set_key("treeview", data)
 
-	menu = tk.Menu(root, tearoff=0)
-
-	def show_menu(event):
-		item = treeview.identify_row(event.y)
-		if item:
-			treeview.selection_set(item)
-			menu.post(event.x_root, event.y_root)
-
-	def remove_selected():
-		for item in treeview.selection():
-			treeview.delete(item)
-		save_treeview()
-
-	menu.add_command(label="Remove", command=remove_selected)
-	treeview.bind("<Button-3>", show_menu)
-
 	def on_click(event):
-		nonlocal selectedServer
+		nonlocal selectedServer, lastSelected
 		item = treeview.identify_row(event.y)
 		if item:
+			lastSelected = item
 			parent = treeview.parent(item)
 			parent_text = treeview.item(parent)["text"] if parent else "Root"
 			#print("Clicked:", treeview.item(item)["text"], "| Note:", treeview.item(item)["values"], "| Parent:", parent_text)
+			addChannelBtn.state(["!disabled"])
+			removeBtn.state(["!disabled"])
 			if parent_text == "Root":
 				addChannelBtn.state(["!disabled"])
 				selectedServer = item

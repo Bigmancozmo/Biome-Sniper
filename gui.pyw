@@ -24,7 +24,7 @@ def start():
 		except:
 			os.system("pip install sv-ttk")
 		import sv_ttk
-		sv_ttk.set_theme("dark")
+		#sv_ttk.set_theme("dark")
 
 	icon = Image.open("icon.png")
 	photo = ImageTk.PhotoImage(icon)
@@ -35,7 +35,7 @@ def start():
 
 	tabs.targets.create(notebook)
 	tabs.discordToken.create(notebook)
-	tabs.servers.create(notebook, root)
+	tabs.servers.create(notebook)
 	#tabs.settings.create(notebook)
 
 	def start_macro():
