@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 import dataMgr as d
+import server_scan.scanner as scanner
+import threading
 
 def getForeground():
 	darkMode = d.get_key("SETTINGS_SV_DarkMode", True) and d.get_key("SETTINGS_SunValleyTheme", True)
@@ -141,10 +143,66 @@ def create(notebook: ttk.Notebook):
 		treeview.item(selectedServer, open=True)
 		save_treeview()
 
+	SCAN_IN_PROGRESS = False
+	SCAN_TARGET = ""
+
+	startScannerBtn = ttk.Button(buttonFrame, text="Scan Channels")
+
+	def scanner_add_channel(channelId, channelName):
+		nonlocal SCAN_IN_PROGRESS, SCAN_TARGET
+		if not SCAN_IN_PROGRESS:
+			return
+		if SCAN_TARGET == "":
+			return
+		exists = False
+		for root in treeview.get_children():
+			if treeview.item(root, "text") == str(channelId):
+				exists = True
+				break
+
+			for child in treeview.get_children(root):
+				if treeview.item(child, "text") == str(channelId):
+					exists = True
+					break
+		if exists:
+			return
+		
+		treeview.insert(SCAN_TARGET, tk.END, text=(str(channelId)), value=(channelName,))
+		treeview.item(SCAN_TARGET, open=True)
+
+	def scanner_complete():
+		nonlocal SCAN_IN_PROGRESS, SCAN_TARGET
+		SCAN_IN_PROGRESS = False
+		SCAN_TARGET = ""
+		startScannerBtn.config(text="Scan Channels")
+		save_treeview()
+
+	def update_scan_progress(PROGRESS, TOTAL):
+		startScannerBtn.config(text=f"Scanning... ({PROGRESS}/{TOTAL})")
+
+	scanner.setHitCallback(scanner_add_channel)
+	scanner.setCompleteCallback(scanner_complete)
+	scanner.setProgressCallback(update_scan_progress)
+
+	def start_scanner():
+		nonlocal SCAN_IN_PROGRESS, SCAN_TARGET, selectedServer
+		if SCAN_IN_PROGRESS:
+			return
+		SCAN_IN_PROGRESS = True
+		SCAN_TARGET = selectedServer
+		item = treeview.item(SCAN_TARGET)
+		t = threading.Thread(target=scanner.scanServer, daemon=True, args=(item["text"],))
+		t.start()
+		startScannerBtn.config(text="Scanning...")
+	
 	def remove_selected():
 		if lastSelected == "":
 			return
 		treeview.delete(lastSelected)
+		addChannelBtn.state(["disabled"])
+		startScannerBtn.state(["disabled"])
+		removeBtn.state(["disabled"])
+		save_treeview()
 
 	addServerBtn = ttk.Button(buttonFrame, text="Add Server", command=add_server)
 	addServerBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
@@ -152,6 +210,10 @@ def create(notebook: ttk.Notebook):
 	addChannelBtn = ttk.Button(buttonFrame, text="Add Channel", command=add_channel)
 	addChannelBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
 	addChannelBtn.state(["disabled"])
+
+	startScannerBtn.config(command=start_scanner)
+	startScannerBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
+	startScannerBtn.state(["disabled"])
 
 	removeBtn = ttk.Button(buttonFrame, text="Remove", command=remove_selected)
 	removeBtn.pack(padx=3, side=tk.LEFT, expand=True, fill="x")
@@ -183,8 +245,10 @@ def create(notebook: ttk.Notebook):
 			removeBtn.state(["!disabled"])
 			if parent_text == "Root":
 				addChannelBtn.state(["!disabled"])
+				startScannerBtn.state(["!disabled"])
 				selectedServer = item
 			else:
 				addChannelBtn.state(["disabled"])
+				startScannerBtn.state(["disabled"])
 
 	treeview.bind("<Button-1>", on_click)  # Left click
