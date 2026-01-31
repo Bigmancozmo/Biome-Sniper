@@ -71,7 +71,7 @@ def convertMessageToDict(msgIn):
 							if action.type == discord.ComponentType.button:
 								newChild["url"] = action.url
 							newChildren.append(newChild)
-						newComp["children"] = [newChild]
+						newComp["children"] = newChildren
 				message["components"].append(newComp)
 
 		return message
