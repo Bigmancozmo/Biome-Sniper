@@ -73,7 +73,7 @@ try:
 
 	print(keywords)
 
-	ALTERNATE_SHARE_RESOLVER = True
+	ALTERNATE_SHARE_RESOLVER = d.get_key("SETTINGS_AltLinkResolver", True)
 
 	def resolve_share_link(share_url):
 		if "privateServerLinkCode" in share_url:
