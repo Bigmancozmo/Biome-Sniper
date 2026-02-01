@@ -53,6 +53,15 @@ def convertMessageToDict(msgIn):
 					dta["description"] = embed.description
 				if embed.footer:
 					dta["footer"] = embed.footer.text
+				if embed.fields:
+					# I'm too lazy to add extra code for this
+					# so i just append it to description
+					for field in embed.fields:
+						if field.name:
+							dta["title"] = dta["title"] + field.name
+						if field.value:
+							dta["title"] = dta["title"] + field.value
+
 				message["embeds"].append(dta)
 		
 		if msgIn.components:
