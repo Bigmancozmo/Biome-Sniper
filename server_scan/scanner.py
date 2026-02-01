@@ -2,7 +2,27 @@ from concurrent.futures import ThreadPoolExecutor
 import requests
 import dataMgr as d
 from logging import warning as warn
-import sys, util
+import sys, util, os
+import urllib.request
+
+# Set this environment variable to disable the auto updater in that directory
+value = os.environ.get("BIOME_SNIPER_DEV_FOLDER")
+if value:
+	value = value.upper()
+else:
+	value = "NoFolder"
+folder = os.path.dirname(os.path.abspath(__file__)).upper()
+
+if value in folder:
+	print("Skipping blacklist update")
+else:
+	print("Updating blacklist...")
+	urllib.request.urlretrieve(
+		"https://raw.githubusercontent.com/Bigmancozmo/Biome-Sniper/main/server_scan/blacklist.py",
+		"server_scan/blacklist.py"
+	)
+	print("Blacklist download complete")
+
 from server_scan.blacklist import BLACKLIST_CHANNELS, BLACKLIST_CATEGORIES
 
 sys.stdout.reconfigure(encoding="utf-8")
