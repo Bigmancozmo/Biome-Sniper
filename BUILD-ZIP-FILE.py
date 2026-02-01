@@ -1,4 +1,4 @@
-import os, shutil
+import shutil
 import updater
 from zipfile import ZipFile, ZIP_DEFLATED
 from pathlib import Path
