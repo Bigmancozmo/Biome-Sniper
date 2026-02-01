@@ -24,11 +24,6 @@
 		"words": ["SAND"],
 		"image": "/biomes/SAND STORM.png"
 	},
-	"AURORA": {
-		"key": "KEYWORD_Aurora",
-		"words": ["AUROR", "GLOBE"],
-		"image": "/biomes/AURORA.png"
-	},
 	"HEAVEN": {
 		"key": "KEYWORD_Heaven",
 		"words": ["HEAV"],

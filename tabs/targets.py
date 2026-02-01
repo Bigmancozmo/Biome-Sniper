@@ -46,7 +46,6 @@ def create(notebook: ttk.Notebook):
 	add_keyword_toggle("KEYWORD_Windy", "Windy", False, Column.WEATHER.value, 0)
 	add_keyword_toggle("KEYWORD_Snowy", "Snowy", False, Column.WEATHER.value, 1)
 	add_keyword_toggle("KEYWORD_Rainy", "Rainy", False, Column.WEATHER.value, 2)
-	add_keyword_toggle("KEYWORD_Aurora", "Aurora", False, Column.WEATHER.value, 3)
 
 	add_keyword_toggle("KEYWORD_SandStorm", "Sand Storm", False, Column.BIOME.value, 0)
 	add_keyword_toggle("KEYWORD_Heaven", "Heaven", False, Column.BIOME.value, 1)
