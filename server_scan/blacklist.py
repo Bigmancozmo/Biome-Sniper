@@ -28,7 +28,6 @@ BLACKLIST_CATEGORIES = [
 	"1360946081592119356", # Unknown
 	"1360917981495951451", # Boosters
 
-
 	# The Glitch Core
 	"1373021908509130864", # Tickets
 	"1430104362327212082", # Unknown (archive?)
@@ -41,6 +40,18 @@ BLACKLIST_CATEGORIES = [
 	"1297620248718999652", # Inactive 3
 	"1263176016189198427", # Mod channels
 	"1335724685996068875", # Unknown
+
+	# Nexus
+	"1289032480124571669", # Verification
+	"1287464026787549294", # Important
+	"1305047553573912627", # Server Stats
+	"1394484276690554984", # Community
+	"1287467798620147763", # Chatting
+	"1314545592269017088", # Nexus Sniper
+	"1291915257463443556", # Tickets
+	"1330693044407898233", # Misc
+	"1287231152331165800", # VC
+	"1355631170079162378", # Archive
 ]
 
 # You don't need to put channels blacklisted
