@@ -9,6 +9,21 @@
 		"words": ["MARI"],
 		"image": "/merchants/Mari.png"
 	},
+	"GEAR A": {
+		"key": "KEYWORD_GearA",
+		"words": ["GEAR A", "GEARA"],
+		"image": "/merchants/Mari.png"
+	},
+	"GEAR B": {
+		"key": "KEYWORD_GearB",
+		"words": ["GEAR B", "GEARB"],
+		"image": "/merchants/Mari.png"
+	},
+	"LUCKY PENNY": {
+		"key": "KEYWORD_LuckyPenny",
+		"words": ["PENNY"],
+		"image": "/merchants/Mari.png"
+	},
 	"JESTER": {
 		"key": "KEYWORD_Jest",
 		"words": ["JEST"],

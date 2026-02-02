@@ -40,8 +40,12 @@ def create(notebook: ttk.Notebook):
 
 	add_keyword_toggle("KEYWORD_Mari", "Mari", False, Column.MERCHANT.value, 0)
 	add_keyword_toggle("KEYWORD_VoidCoin", "Void Coin", True, Column.MERCHANT.value, 1)
-	add_keyword_toggle("KEYWORD_Jest", "Jester", True, Column.MERCHANT.value, 2)
-	add_keyword_toggle("KEYWORD_Obliv", "Oblivion Potion", False, Column.MERCHANT.value, 3)
+	add_keyword_toggle("KEYWORD_GearA", "Gear A", True, Column.MERCHANT.value, 2)
+	add_keyword_toggle("KEYWORD_GearB", "Gear B", True, Column.MERCHANT.value, 3)
+	add_keyword_toggle("KEYWORD_LuckyPenny", "Lucky Penny", True, Column.MERCHANT.value, 4)
+	add_keyword_toggle("KEYWORD_VoidCoin", "Void Coin", True, Column.MERCHANT.value, 5)
+	add_keyword_toggle("KEYWORD_Jest", "Jester", True, Column.MERCHANT.value, 6)
+	add_keyword_toggle("KEYWORD_Obliv", "Oblivion Potion", False, Column.MERCHANT.value, 7)
 
 	add_keyword_toggle("KEYWORD_Windy", "Windy", False, Column.WEATHER.value, 0)
 	add_keyword_toggle("KEYWORD_Snowy", "Snowy", False, Column.WEATHER.value, 1)
