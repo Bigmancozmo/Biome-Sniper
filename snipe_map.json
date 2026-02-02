@@ -1,7 +1,7 @@
 {
 	"VOID COIN": {
 		"key": "KEYWORD_VoidCoin",
-		"words": ["VOID"],
+		"words": ["VOID", "VC"],
 		"image": "/merchants/Mari.png"
 	},
 	"MARI": {
