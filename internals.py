@@ -112,7 +112,7 @@ try:
 
 	async def handle_message(message):
 		allText = util.extractText(message, True)
-		noUrl = allText.replace(getLink(), "")
+		noUrl = allText.replace(getLink(allText), "")
 
 		if "Guild:" in allText and "Channel:" in allText and "BMC's Sniper" in allText and "Sniped link" in allText:
 			return
