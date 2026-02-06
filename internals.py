@@ -118,9 +118,9 @@ try:
 
 		if matched_keywords and not matched_blacklist:
 			if PAUSED:
-				print("It's paused buddy")
+				print("Saw", matched_keywords, "but the macro is paused")
 				if "GLIT" in matched_keywords or "CYBER" in matched_keywords or "DREAM" in matched_keywords:
-					print("BUT I WILL BYPASS ITTTTT")
+					print("Rare biome detected, bypassing pause")
 				else:
 					return
 			print("Matched keywords")
@@ -129,16 +129,12 @@ try:
 				deeplink = resolve_share_link(getLink(allText))
 				#deeplink = deeplink.replace("roblox://", "roblox-player://")
 				if sys.platform == "win32":
-					print("OPENING WITH WIN32")
 					os.startfile(deeplink)
 				else:
-					print("OPENING WITH WEB BROWSER")
 					webbrowser.open(deeplink)
 				sendNotif = True
 			except Exception as e:
-				print("No PS link found, but saw " + str(matched_keywords), f'({message.guild.id}/{message.channel.id})')
-				print(allText)
-				print("Proper error:", e)
+				print("An error occurred:", e)
 			if sendNotif:
 				print("Sniped " + str(matched_keywords))
 				ducknotify.notify("Biome Sniper", "Joining "+str(matched_keywords) +", will pause for 120 seconds")
@@ -162,7 +158,6 @@ try:
 					]
 				}
 
-				print("https://keylens-website.web.app"+kwdData["image"])
 				payload["embeds"][0]["thumbnail"] = {"url": "https://keylens-website.web.app"+kwdData["image"]}
 
 				if url is not None and url != "" and url.startswith("http"):
@@ -176,7 +171,6 @@ try:
 
 	class CustomClient(discord.Client):
 		async def on_ready(self):
-			print("PRE log in")
 			ducknotify.notify("Biome Sniper", "Logged in as "+str(self.user))
 			print("Logged in as", self.user)
 			print(self.get_channel(1423091592775864351))
