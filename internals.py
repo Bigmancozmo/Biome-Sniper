@@ -89,32 +89,36 @@ try:
 				return f'roblox://navigation/share_links?code={split2}&type=Server'
 
 	def getLink(allText):
-		split1 = allText.split("https://www.roblox.com")
-		split1 = split1[len(split1)-1]
-		final = split1
+		try:
+			split1 = allText.split("https://www.roblox.com")
+			split1 = split1[len(split1)-1]
+			final = split1
 
-		if "privateServerLinkCode" in final:
-			final = final.split("ServerLinkCode=")[1]
-			final2 = ""
-			for char in final:
-				if char.isdigit():
-					final2 = final2 + char
-				else:
-					break
-			final = f"https://www.roblox.com/games/15532962292/join?privateServerLinkCode={final2}"
-		else:
-			final = final.split("?code=")[1].split("&type")[0]
-			final = f'https://www.roblox.com/share?code={final}&type=Server'
-		return final
+			if "privateServerLinkCode" in final:
+				final = final.split("ServerLinkCode=")[1]
+				final2 = ""
+				for char in final:
+					if char.isdigit():
+						final2 = final2 + char
+					else:
+						break
+				final = f"https://www.roblox.com/games/15532962292/join?privateServerLinkCode={final2}"
+			else:
+				final = final.split("?code=")[1].split("&type")[0]
+				final = f'https://www.roblox.com/share?code={final}&type=Server'
+			return final
+		except:
+			return "Link Not Found"
 
 	async def handle_message(message):
 		allText = util.extractText(message, True)
+		noUrl = allText.replace(getLink(), "")
 
 		if "Guild:" in allText and "Channel:" in allText and "BMC's Sniper" in allText and "Sniped link" in allText:
 			return
 
-		matched_keywords = [word for word in keywords if word in allText.upper()]
-		matched_blacklist = [word for word in blacklist if word in allText.upper()]
+		matched_keywords = [word for word in keywords if word in noUrl.upper()]
+		matched_blacklist = [word for word in blacklist if word in noUrl.upper()]
 
 		if matched_keywords and not matched_blacklist:
 			if PAUSED:
