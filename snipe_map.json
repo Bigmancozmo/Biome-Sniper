@@ -9,6 +9,11 @@
 		"words": ["MARI"],
 		"image": "/merchants/Mari.png"
 	},
+	"RIN": {
+		"key": "KEYWORD_Rin",
+		"words": ["RIN"],
+		"image": "/merchants/Rin.png"
+	},
 	"GEAR A": {
 		"key": "KEYWORD_GearA",
 		"words": ["GEAR A", "GEARA"],
