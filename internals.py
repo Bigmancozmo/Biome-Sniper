@@ -46,20 +46,15 @@ try:
 
 	print("Done")
 
-	target_guilds = []
-	target_channels = []
+	target_guilds = [1466549223830061424]
+	target_channels = [1472677534926901350]
 
 	treeview_data = d.get_key("treeview", {})
 	for rootName in treeview_data:
 		target_guilds.append(rootName)
 		for childName in treeview_data[rootName]["children"]:
 			target_channels.append(childName)
-
-	PRIVATE_SERVER_BASE = "https://www.roblox.com/games/15532962292/Sols-RNG-Eon-1-8?privateServerLinkCode="
-
-	# your discord token
-	TOKEN = "ImNotGivingYouMyTokenBuddy"
-
+	
 	keywords = []
 
 	for keyword in KEYWORD_MAP:
@@ -131,10 +126,13 @@ try:
 			sendNotif = False
 			try:
 				deeplink = resolve_share_link(getLink(allText))
+				print("Resolved", deeplink)
 				#deeplink = deeplink.replace("roblox://", "roblox-player://")
 				if sys.platform == "win32":
+					print("Joining (win32)")
 					os.startfile(deeplink)
 				else:
+					print("Joining (osx)")
 					webbrowser.open(deeplink)
 				sendNotif = True
 			except Exception as e:
@@ -169,6 +167,7 @@ try:
 						"Content-Type": "application/json",
 						"User-Agent": "insomnia/11.2.0"
 					})
+				print("Sent webhook message")
 
 			except Exception as e:
 				print("Error sending webhook message:", e)
