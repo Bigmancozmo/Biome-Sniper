@@ -46,8 +46,8 @@ try:
 
 	print("Done")
 
-	target_guilds = [1466549223830061424]
-	target_channels = [1472677534926901350]
+	target_guilds = ['1466549223830061424']
+	target_channels = ['1472677534926901350']
 
 	treeview_data = d.get_key("treeview", {})
 	for rootName in treeview_data:
