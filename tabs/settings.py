@@ -6,7 +6,6 @@ import sys, os
 
 def apply(root):
 	s = ttk.Style()
-	print(f"Available themes: {s.theme_names()}")
 
 	SunValleyTheme = d.get_key("SETTINGS_SunValleyTheme", True)
 	SunValleyDark = d.get_key("SETTINGS_SV_DarkMode", True)
@@ -72,17 +71,25 @@ def create(notebook: ttk.Notebook, root):
 	)
 
 	boolSetting(
-		"Custom Theme",
-		"(WINDOWS ONLY)\nMakes the UI look pretty.\nAlso makes it more laggy\nDisable if you need the script's GUI\nto run faster.",
-		"SunValleyTheme",
-		True
+		"ADB Join Mode",
+		"(Advanced setting)\nIf you have Android, you can set up ADB on PC and enable USB Debugging on your phone.\nThen, connect your phone to your PC over USB, and you can join server links almost instantly!\nNOTE: The phone must be unlocked to join servers. The easiest way is to just leave Sol's RNG open.",
+		"AndroidJoin",
+		False
 	)
 
-	boolSetting(
-		"Dark Theme (requires Custom Theme)",
-		"(WINDOWS ONLY)\nOnly works if Custom Theme is enabled.",
-		"SV_DarkMode",
-		True
-	)
+	if sys.platform.startswith('win'):
+		boolSetting(
+			"Custom Theme",
+			"Makes the UI look pretty.\nAlso makes it more laggy\nDisable if you need the script's GUI\nto run faster.",
+			"SunValleyTheme",
+			True
+		)
+
+		boolSetting(
+			"Dark Theme (requires Custom Theme)",
+			"Only works if Custom Theme is enabled.",
+			"SV_DarkMode",
+			True
+		)
 
 	apply(root)
