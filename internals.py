@@ -126,23 +126,24 @@ try:
 			print("Matched keywords")
 			sendNotif = False
 			link = getLink(allText)
-			try:
-				deeplink = resolve_share_link(link)
-				print("Resolved", deeplink)
-				#deeplink = deeplink.replace("roblox://", "roblox-player://")
-				if ADB_JOINER:
-					print("Joining via ADB")
-					os.system(f'adb shell am start -a android.intent.action.VIEW -d "{deeplink}"')
-				else:
+			if ADB_JOINER:
+				print("Joining via ADB")
+				# gaslight roblox into thinking discord opened it 💔
+				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'{link}\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
+			else:
+				try:
+					deeplink = resolve_share_link(link)
+					print("Resolved", deeplink)
+					#deeplink = deeplink.replace("roblox://", "roblox-player://")
 					if sys.platform == "win32":
 						print("Joining (win32)")
 						os.startfile(deeplink)
 					else:
 						print("Joining (osx)")
 						webbrowser.open(deeplink)
-				sendNotif = True
-			except Exception as e:
-				print("An error occurred:", e)
+					sendNotif = True
+				except Exception as e:
+					print("An error occurred:", e)
 			if sendNotif:
 				print("Sniped " + str(matched_keywords))
 				ducknotify.notify("Biome Sniper", "Joining "+str(matched_keywords) +", will pause for 120 seconds")
