@@ -23,6 +23,14 @@ try:
 		time.sleep(dur)
 		PAUSED = False
 
+	RARE_PAUSED = False
+
+	def rare_pause_for(dur):
+		global RARE_PAUSED
+		RARE_PAUSED = True
+		time.sleep(dur)
+		RARE_PAUSED = False
+
 	try:
 		import discord
 	except:
@@ -117,18 +125,30 @@ try:
 		matched_blacklist = [word for word in blacklist if word in noUrl.upper()]
 
 		if matched_keywords and not matched_blacklist:
+			if RARE_PAUSED:
+				print("Saw", matched_keywords, "but the macro is paused (Rare Biome)")
+				return
 			if PAUSED:
-				print("Saw", matched_keywords, "but the macro is paused")
+				print("Saw", matched_keywords, "but the macro is paused (Regular Biome)")
 				if "GLIT" in matched_keywords or "CYBER" in matched_keywords or "DREAM" in matched_keywords:
 					print("Rare biome detected, bypassing pause")
 				else:
 					return
+			if "DREAM" in matched_keywords:
+				t = threading.Thread(target=rare_pause_for, args=(60*4,))
+				t.start()
+			if "CYBER" in matched_keywords:
+				t = threading.Thread(target=rare_pause_for, args=(60*10,))
+				t.start()
+			if "DREAM" in matched_keywords:
+				t = threading.Thread(target=rare_pause_for, args=(60*3.5))
+				t.start()
 			print("Matched keywords")
 			sendNotif = False
 			link = getLink(allText)
 			if ADB_JOINER:
 				if sys.platform == "win32":
-					if d.get_key("SETTING_ADBCloseOnPC", False):
+					if d.get_key("SETTINGS_ADBCloseOnPC", False):
 						os.system('taskkill /F /FI "WINDOWTITLE eq Roblox" >nul 2>&1')
 
 				print("Joining via ADB")
