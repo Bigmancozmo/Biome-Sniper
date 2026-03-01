@@ -81,7 +81,7 @@ def create(notebook: ttk.Notebook, root):
 		"ADB Close on PC",
 		"Requires ADB Join Mode to be enabled.\nWhen a link is sniped and joined on mobile, close PC Roblox if it's open.",
 		"AndroidJoin",
-		False
+		True
 	)
 
 	if sys.platform.startswith('win'):

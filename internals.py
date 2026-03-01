@@ -129,7 +129,7 @@ try:
 			if ADB_JOINER:
 				if sys.platform == "win32":
 					if d.get_key("SETTING_ADBCloseOnPC", False):
-						os.system("taskkill /F /IM RobloxPlayerBeta.exe")
+						os.system('taskkill /F /FI "WINDOWTITLE eq Roblox" >nul 2>&1')
 
 				print("Joining via ADB")
 				# gaslight roblox into thinking discord opened it 💔
