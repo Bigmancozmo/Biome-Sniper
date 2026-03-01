@@ -127,6 +127,10 @@ try:
 			sendNotif = False
 			link = getLink(allText)
 			if ADB_JOINER:
+				if sys.platform == "win32":
+					if d.get_key("SETTING_ADBCloseOnPC", False):
+						os.system("taskkill /F /IM RobloxPlayerBeta.exe")
+
 				print("Joining via ADB")
 				# gaslight roblox into thinking discord opened it 💔
 				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'{link}\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
