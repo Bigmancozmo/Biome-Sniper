@@ -1,3 +1,26 @@
+import os
+import sys
+
+lock_file = os.path.join(os.path.expanduser("~"), ".bmc_sniper_lock")
+
+if os.path.exists(lock_file):
+    try:
+        with open(lock_file, "r") as f:
+            old_pid = int(f.read())
+        # check if old PID is running
+        import psutil
+        if psutil.pid_exists(old_pid):
+            print(f"closing old instance {old_pid}")
+            psutil.Process(old_pid).terminate()
+    except:
+        pass
+
+with open(lock_file, "w") as f:
+    f.write(str(os.getpid()))
+
+import atexit
+atexit.register(lambda: os.remove(lock_file) if os.path.exists(lock_file) else None)
+
 import os, sys, webbrowser
 from tkinter import *
 from tkinter import ttk
