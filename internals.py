@@ -9,6 +9,7 @@ try:
 	import datetime
 	import util
 	import json
+	import server_scan.blacklist
 
 	sys.stdout.reconfigure(encoding='utf-8')
 
@@ -115,7 +116,10 @@ try:
 
 		return "Link Not Found"
 
-	async def handle_message(message):
+	async def handle_message(message: discord.Message):
+		if message.author.id in server_scan.blacklist.BLACKLIST_USERS:
+			return
+
 		allText = util.extractText(message, True)
 		noUrl = allText.replace(getLink(allText), "")
 
