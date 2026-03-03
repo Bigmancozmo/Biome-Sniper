@@ -94,25 +94,26 @@ try:
 
 	def getLink(allText):
 		try:
-			split1 = allText.split("https://www.roblox.com")
-			split1 = split1[len(split1)-1]
-			final = split1
+			base = "https://www.roblox.com"
 
-			if "privateServerLinkCode" in final:
-				final = final.split("ServerLinkCode=")[1]
-				final2 = ""
-				for char in final:
-					if char.isdigit():
-						final2 = final2 + char
+			if "privateServerLinkCode" in allText:
+				part = allText.split("ServerLinkCode=")[1]
+				digits = ""
+				for c in part:
+					if c.isdigit():
+						digits += c
 					else:
 						break
-				final = f"https://www.roblox.com/games/15532962292/join?privateServerLinkCode={final2}"
-			else:
-				final = final.split("?code=")[1].split("&type")[0]
-				final = f'https://www.roblox.com/share?code={final}&type=Server'
-			return final
+				return f"{base}/games/15532962292/join?privateServerLinkCode={digits}"
+
+			if "?code=" in allText:
+				code = allText.split("?code=")[1].split("&type")[0]
+				return f"{base}/share?code={code}&type=Server"
+
 		except:
-			return "Link Not Found"
+			pass
+
+		return "Link Not Found"
 
 	async def handle_message(message):
 		allText = util.extractText(message, True)
