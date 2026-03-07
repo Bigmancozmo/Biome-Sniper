@@ -7,6 +7,7 @@ Automatic biome sniper for [Sol's RNG](https://www.roblox.com/games/15532962292/
 - Automatic updates
 - Customizable Discord servers/channels
 - Every biome in the game available
+- ADB mode for (almost) instant joining through an Android device
 
 ## Usage
 - Download the [latest release](https://github.com/Bigmancozmo/Biome-Sniper/releases/latest)
