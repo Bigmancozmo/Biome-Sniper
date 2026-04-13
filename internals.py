@@ -9,7 +9,7 @@ try:
 	import datetime
 	import util
 	import json
-	import server_scan.blacklist
+	from logging import warning
 
 	sys.stdout.reconfigure(encoding='utf-8')
 
@@ -73,7 +73,7 @@ try:
 				keywords.append(kwd)
 
 	TOKEN = d.get_key("DiscordToken", "")
-	blacklist = ["ENDED", "FAKE", "BAIT", "OVER", "HEAVENLY"]
+	blacklist = ["ENDED", "FAKE", "BAIT", " OVER ", "HEAVENLY", " OVER", "(OVER)"]
 
 	print(keywords)
 
@@ -111,15 +111,13 @@ try:
 				code = allText.split("?code=")[1].split("&type")[0]
 				return f"{base}/share?code={code}&type=Server"
 
-		except:
+		except Exception as e:
+			warning("e")
 			pass
 
 		return "Link Not Found"
 
-	async def handle_message(message: discord.Message):
-		if message.author.id in server_scan.blacklist.BLACKLIST_USERS:
-			return
-
+	async def handle_message(message):
 		allText = util.extractText(message, True)
 		noUrl = allText.replace(getLink(allText), "")
 
@@ -151,6 +149,7 @@ try:
 			print("Matched keywords")
 			sendNotif = False
 			link = getLink(allText)
+			print(link)
 			if ADB_JOINER:
 				if sys.platform == "win32":
 					if d.get_key("SETTINGS_ADBCloseOnPC", False):
@@ -212,7 +211,6 @@ try:
 		async def on_ready(self):
 			ducknotify.notify("Biome Sniper", "Logged in as "+str(self.user))
 			print("Logged in as", self.user)
-			print(self.get_channel(1423091592775864351))
 		async def on_message(self, message):
 			global target_channels
 			global target_guilds

@@ -13,15 +13,16 @@ else:
 	value = "NoFolder"
 folder = os.path.dirname(os.path.abspath(__file__)).upper()
 
-if value in folder:
-	print("Skipping blacklist update")
-else:
-	print("Updating blacklist...")
-	urllib.request.urlretrieve(
-		"https://raw.githubusercontent.com/Bigmancozmo/Biome-Sniper/main/server_scan/blacklist.py",
-		"server_scan/blacklist.py"
-	)
-	print("Blacklist download complete")
+if sys.platform == "win32":
+	if value in folder:
+		print("Skipping blacklist update")
+	else:
+		print("Updating blacklist...")
+		urllib.request.urlretrieve(
+			"https://raw.githubusercontent.com/Bigmancozmo/Biome-Sniper/main/server_scan/blacklist.py",
+			"server_scan/blacklist.py"
+		)
+		print("Blacklist download complete")
 
 from server_scan.blacklist import BLACKLIST_CHANNELS, BLACKLIST_CATEGORIES
 

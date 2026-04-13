@@ -80,7 +80,3 @@ BLACKLIST_CHANNELS = [
 	# Sol's RNG Discord
 	"1282554696032194593", #others
 ]
-
-BLACKLIST_USERS = [
-	1107821391895609465, # puts "_____ but hunting for glitch", triggers sniper
-]
