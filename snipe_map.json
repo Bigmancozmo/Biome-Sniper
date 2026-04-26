@@ -98,5 +98,10 @@
 		"key": "KEYWORD_CYBER",
 		"words": ["CYBER"],
 		"image": "/biomes/CYBERSPACE.png"
+	},
+	"SINGULARITY": {
+		"key": "KEYWORD_SINGULARITY",
+		"words": ["SINGULARIT"],
+		"image": "/biomes/SINGULARITY.png"
 	}
 }

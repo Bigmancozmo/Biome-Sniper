@@ -43,7 +43,6 @@ def create(notebook: ttk.Notebook):
 	add_keyword_toggle("KEYWORD_GearA", "Gear A", True, Column.MERCHANT.value, 2)
 	add_keyword_toggle("KEYWORD_GearB", "Gear B", True, Column.MERCHANT.value, 3)
 	add_keyword_toggle("KEYWORD_LuckyPenny", "Lucky Penny", True, Column.MERCHANT.value, 4)
-	add_keyword_toggle("KEYWORD_VoidCoin", "Void Coin", True, Column.MERCHANT.value, 5)
 	add_keyword_toggle("KEYWORD_Jest", "Jester", True, Column.MERCHANT.value, 6)
 	add_keyword_toggle("KEYWORD_Obliv", "Oblivion Potion", False, Column.MERCHANT.value, 7)
 	add_keyword_toggle("KEYWORD_Rin", "Rin", False, Column.MERCHANT.value, 8)
@@ -62,3 +61,4 @@ def create(notebook: ttk.Notebook):
 	add_keyword_toggle("KEYWORD_GLIT", "GLITCHED", True, Column.RARE_BIOME.value, 0)
 	add_keyword_toggle("KEYWORD_DREAM", "DREAMSPACE", True, Column.RARE_BIOME.value, 1)
 	add_keyword_toggle("KEYWORD_CYBER", "CYBERSPACE", True, Column.RARE_BIOME.value, 2)
+	add_keyword_toggle("KEYWORD_SINGULARITY", "SINGULARITY", True, Column.RARE_BIOME.value, 3)
