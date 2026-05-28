@@ -156,6 +156,9 @@ try:
 						os.system('taskkill /F /FI "WINDOWTITLE eq Roblox" >nul 2>&1')
 
 				print("Joining via ADB")
+				# kick it out of the game
+				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'https://www.roblox.com/games/15532962292/Sols-RNG\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
+				time.sleep(1)
 				# gaslight roblox into thinking discord opened it 💔
 				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'{link}\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
 			else:
