@@ -98,14 +98,9 @@ try:
 			base = "https://www.roblox.com"
 
 			if "privateServerLinkCode" in allText:
-				part = allText.split("ServerLinkCode=")[1]
-				digits = ""
-				for c in part:
-					if c.isdigit():
-						digits += c
-					else:
-						break
-				return f"{base}/games/15532962292/join?privateServerLinkCode={digits}"
+				path = allText.split("/games/")[1].split("?privateServerLinkCode=")[0]
+				code = allText.split("privateServerLinkCode=")[1].split("&")[0]
+				return f"{base}/games/{path}?privateServerLinkCode={code}"
 
 			if "?code=" in allText:
 				code = allText.split("?code=")[1].split("&type")[0]
@@ -133,7 +128,7 @@ try:
 				return
 			if PAUSED:
 				print("Saw", matched_keywords, "but the macro is paused (Regular Biome)")
-				if "GLIT" in matched_keywords or "CYBER" in matched_keywords or "DREAM" in matched_keywords:
+				if "GLIT" in matched_keywords or "CYBER" in matched_keywords or "DREAM" in matched_keywords or "SINGU" in matched_keywords:
 					print("Rare biome detected, bypassing pause")
 				else:
 					return
@@ -142,6 +137,9 @@ try:
 				t.start()
 			if "CYBER" in matched_keywords:
 				t = threading.Thread(target=rare_pause_for, args=(60*10,))
+				t.start()
+			if "SINGU" in matched_keywords:
+				t = threading.Thread(target=rare_pause_for, args=(60*15,))
 				t.start()
 			if "DREAM" in matched_keywords:
 				t = threading.Thread(target=rare_pause_for, args=(60*3.5))
@@ -157,17 +155,17 @@ try:
 
 				print("Joining via ADB")
 				# kick it out of the game
-				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'https://www.roblox.com/games/15532962292/Sols-RNG\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
-				time.sleep(1)
+				os.system("adb shell am force-stop com.roblox.client")
 				# gaslight roblox into thinking discord opened it 💔
 				os.system(f'adb shell "am start -a android.intent.action.VIEW -d \'{link}\' -f 0x10000000 --es android.intent.extra.REFERRER android-app://com.discord"')
 			else:
 				try:
 					deeplink = resolve_share_link(link)
 					print("Resolved", deeplink)
-					#deeplink = deeplink.replace("roblox://", "roblox-player://")
+					deeplink = deeplink.replace("roblox://", "roblox-player://")
 					if sys.platform == "win32":
 						print("Joining (win32)")
+						os.system('taskkill /F /FI "WINDOWTITLE eq Roblox" >nul 2>&1')
 						os.startfile(deeplink)
 					else:
 						print("Joining (osx)")

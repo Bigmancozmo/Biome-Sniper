@@ -31,7 +31,7 @@
 	},
 	"JESTER": {
 		"key": "KEYWORD_Jest",
-		"words": ["JEST"],
+		"words": ["JEST", "EXCHA"],
 		"image": "/merchants/Jester.png"
 	},
 	"OBLIVION POTION": {
@@ -81,7 +81,7 @@
 	},
 	"CORRUPTION": {
 		"key": "KEYWORD_Corruption",
-		"words": ["CORRUP"],
+		"words": ["CORRU"],
 		"image": "/biomes/CORRUPTION.png"
 	},
 	"GLITCHED": {
@@ -101,7 +101,7 @@
 	},
 	"SINGULARITY": {
 		"key": "KEYWORD_SINGULARITY",
-		"words": ["SINGULARIT"],
+		"words": ["SING"],
 		"image": "/biomes/SINGULARITY.png"
 	}
 }
