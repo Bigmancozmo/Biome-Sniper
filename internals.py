@@ -1,4 +1,6 @@
 try:
+	import terminalwrapper
+	terminalwrapper.clear()
 	print("Importing packages, this may take a moment if it's your first time running the script.")
 
 	import os
@@ -13,6 +15,7 @@ try:
 
 	sys.stdout.reconfigure(encoding='utf-8')
 
+	print("Loading data...")
 	with open("snipe_map.json", "r") as f:
 		KEYWORD_MAP = json.load(f)
 
@@ -54,6 +57,7 @@ try:
 	import ducknotify
 
 	print("Done")
+	time.sleep(0.1)
 
 	target_guilds = ['1466549223830061424']
 	target_channels = ['1472677534926901350']
@@ -76,6 +80,9 @@ try:
 	blacklist = ["ENDED", "FAKE", "BAIT", " OVER ", "HEAVENLY", " OVER", "(OVER)"]
 
 	print(keywords)
+
+	time.sleep(0.1)
+	terminalwrapper.clear()
 
 	ALTERNATE_SHARE_RESOLVER = d.get_key("SETTINGS_AltLinkResolver", True)
 	ADB_JOINER = d.get_key("SETTINGS_AndroidJoin", False)
@@ -144,10 +151,8 @@ try:
 			if "DREAM" in matched_keywords:
 				t = threading.Thread(target=rare_pause_for, args=(60*3.5))
 				t.start()
-			print("Matched keywords")
 			sendNotif = False
 			link = getLink(allText)
-			print(link)
 			if ADB_JOINER:
 				if sys.platform == "win32":
 					if d.get_key("SETTINGS_ADBCloseOnPC", False):
@@ -161,10 +166,8 @@ try:
 			else:
 				try:
 					deeplink = resolve_share_link(link)
-					print("Resolved", deeplink)
 					deeplink = deeplink.replace("roblox://", "roblox-player://")
 					if sys.platform == "win32":
-						print("Joining (win32)")
 						os.system('taskkill /F /FI "WINDOWTITLE eq Roblox" >nul 2>&1')
 						os.startfile(deeplink)
 					else:
@@ -174,8 +177,9 @@ try:
 				except Exception as e:
 					print("An error occurred:", e)
 			if sendNotif:
-				print("Sniped " + str(matched_keywords))
-				ducknotify.notify("Biome Sniper", "Joining "+str(matched_keywords) +", will pause for 120 seconds")
+				kwdData = util.getKeywordDataFromKeyword(matched_keywords[0])
+				print("Sniped " + kwdData["name"])
+				ducknotify.notify("Biome Sniper", "Joining " + kwdData["name"] +", will pause for 120 seconds")
 				t = threading.Thread(target=pause_for, args=(120,))
 				t.start()
 			try:
@@ -203,15 +207,18 @@ try:
 						"Content-Type": "application/json",
 						"User-Agent": "insomnia/11.2.0"
 					})
-				print("Sent webhook message")
 
 			except Exception as e:
 				print("Error sending webhook message:", e)
 
 	class CustomClient(discord.Client):
 		async def on_ready(self):
+			terminalwrapper.clear()
 			ducknotify.notify("Biome Sniper", "Logged in as "+str(self.user))
-			print("Logged in as", self.user)
+			print("\n█▄▄ █▀▄▀█ █▀▀ ▀ █▀   █▀ █▄░█ █ █▀█ █▀▀ █▀█")
+			print("█▄█ █░▀░█ █▄▄ ░ ▄█   ▄█ █░▀█ █ █▀▀ ██▄ █▀▄\n")
+			print("Logged in to Discord as " + self.user.name)
+			print("Waiting for messages...\n")
 		async def on_message(self, message):
 			global target_channels
 			global target_guilds
@@ -228,6 +235,9 @@ try:
 	def start():
 			print("Target Servers:", target_guilds)
 			print("Target Channels:", target_channels)
+			time.sleep(0.1)
+			terminalwrapper.clear()
+			time.sleep(0.1)
 			client = CustomClient()
 			client.run(TOKEN)
 
@@ -252,4 +262,4 @@ except Exception as e:
 		print("Reinstalling...")
 		os.system("pip install -U discord.py-self")
 		time.sleep(1)
-		input("Fix applied!\nYou'll need to restart the script.\nPress enter to continue")
+		input("Fix applied!\nYou'll need to restart the sniper.\nPress enter to continue")
